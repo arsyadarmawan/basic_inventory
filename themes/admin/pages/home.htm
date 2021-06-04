@@ -1,0 +1,76 @@
+title = "Dashboard"
+url = "/dashboard"
+layout = "default"
+is_hidden = 0
+==
+    use Inventory\Warehouse\Models\Warehouse;
+    use Inventory\Warehouse\Models\Category;
+    use Inventory\Warehouse\Models\Stuff;
+
+    function onStart(){
+        $user = \Auth::getUser();
+        $this['warehouses'] = Warehouse::all();
+        $this['categories'] = Category::all();
+        $this['stuff'] = Stuff::where('user_id',$user->id)->count();
+    }
+==
+<body>
+    {% partial 'navigation' %}
+    <div class="main-content">
+      <section class="section">
+        <div class="section-header">
+          <h1>Inventory Integration System</h1>
+          <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+            
+          </div>
+        </div>
+  
+        <div class="section-body">
+          <h2 class="section-title">Inventory System</h2>
+          <div class="card">
+            <div class="card-header">
+              <h4>Stuff Inventory</h4>
+            </div>
+            <div class="card-body">
+              <p>Hello Mr / Mrs Thareeq Arsyad. You have total <b>{{stuff}}</b> store to inventory system</p>
+              <p>Your stuff always safe in our inventory, if something happens please kindly contact us</p>
+              <a href="{{'stuff/index'|page}}" class="btn btn-dark">View</a>
+              <a href="#" class="btn btn-info">Contact Us</a>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6"> 
+              <div class="card">
+                <div class="card-header">
+                  <h4>Warehouse</h4>
+                </div>
+                <div class="card-body">
+                  We Have Total <b>{{warehouses.count()}}</b> Active Warehouse
+                </div>
+                <div class="card-footer text-right">
+                  <a target="_blank" href="{{'warehouse/index'|page}}" class="btn btn-info">Check Warehouses</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Category</h4>
+                </div>
+                <div class="card-body">
+                  We Have Total <b>{{categories.count()}}</b> Category
+                </div>
+                <div class="card-footer text-right">
+                  <a target="_blank" href="{{'category/index'|page}}" class="btn btn-primary">Check Categories</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  </div>
+    <!-- General JS Scripts -->
+  </body>

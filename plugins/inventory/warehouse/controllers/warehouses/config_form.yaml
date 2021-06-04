@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Warehouse
+
+# Model Form Field configuration
+form: $/inventory/warehouse/models/warehouse/fields.yaml
+
+# Model Class name
+modelClass: Inventory\Warehouse\Models\Warehouse
+
+# Default redirect location
+defaultRedirect: inventory/warehouse/warehouses
+
+# Create page
+create:
+    title: Create Warehouse
+    redirect: inventory/warehouse/warehouses/update/:id
+    redirectClose: inventory/warehouse/warehouses
+
+# Update page
+update:
+    title: Edit Warehouse
+    redirect: inventory/warehouse/warehouses
+    redirectClose: inventory/warehouse/warehouses
+
+# Preview page
+preview:
+    title: Preview Warehouse

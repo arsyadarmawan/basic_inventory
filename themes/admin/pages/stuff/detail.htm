@@ -1,0 +1,68 @@
+title = "Detail Stuff"
+url = "/stuff/detail/:stuffId?*"
+layout = "default"
+is_hidden = 0
+[inventory]
+stuffId = "{{ :stuffId }}"
+==
+    use Inventory\Warehouse\Models\Stuff;
+    function onStart(){
+        $this['stuff'] = Stuff::find($this->param('stuffId'));
+    }
+==
+{%set log = inventory.getLogStuff()%}
+{% partial 'navigation' %}
+<div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>Inventory Integration System</h1>
+        <div class="section-header-breadcrumb">
+          <div class="breadcrumb-item active"><a href="#">Stuff</a></div>
+          <div class="breadcrumb-item">Edit</div>
+        </div>
+      </div>
+
+      <div class="section-body">
+        <h2 class="section-title">Create Module</h2>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                  {{ form_open({ request: 'checkoutStuff' }) }}
+                    <div class="card-body">
+                        <div class="form-group">
+                          <label>Name</label>
+                          <input type="title" name="name" class="form-control" value="{{stuff.name}}">
+                        </div>
+                        <div class="form-group">
+                          <label>Warehouse</label>
+                          <input disabled type="title" name="warehouse" class="form-control" value="{{stuff.warehouse ? stuff.warehouse.name : 'Already Picked' }}">
+                        </div>
+                        <div class="form-group">
+                          <label>Entry Date</label>
+                          <input type="text" name="purpose" class="form-control" disabled value="{{log.entry_date|date('Y-m-d')}}">
+                        </div>
+                        <div class="form-group">
+                            <label>Out Date</label>
+                            <input type="text" name="purpose" class="form-control" disabled value="{{ log.out_date ? log.out_date|date('Y-m-d') : null }}">
+                        </div>
+                        {%if stuff.media.getPath()%}
+                        <div class="form-group">
+                            <label>Image </label>
+                            <br>
+                            <a target="_blank" href="{{stuff.media.getPath()}}">Click Here</a>
+                        </div>
+                        {%endif%}
+                        {%if log.out_date == null%}
+                          <button type="submit" class="btn btn-danger text-right">Checkout</button>
+                        {%else%}
+                          <a href="{{'stuff/index'|page}}" class="btn btn-info">Back</a>
+                        {%endif%}
+                        {{ form_close() }}
+                    </div>
+                </div>
+            </div>
+            </div>
+
+      </div>
+    </section>
+  </div>

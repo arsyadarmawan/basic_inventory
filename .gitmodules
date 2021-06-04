@@ -1,0 +1,3 @@
+[submodule "plugins/responsiv/uploader"]
+	path = plugins/responsiv/uploader
+	url = https://github.com/responsiv/uploader-plugin.git

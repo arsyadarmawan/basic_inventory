@@ -1,0 +1,30 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: name
+        span: auto
+    capacity: 
+        label: capacity
+        span: auto
+        type: number
+    facility: 
+        label: description 
+        span: auto  
+        type: richeditor
+    is_active:
+        label: is Active?
+        type: switch
+        span: auto
+    address: 
+        label: description
+        span: auto  
+        type: richeditor
+    media:
+        label: upload
+        type: fileupload
+        mode: file
+        span: auto
+

@@ -1,0 +1,15 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: name
+    description:
+        label: description
+        type: richeditor
+    media:
+        label: upload
+        type: fileupload
+        mode: file
+        span: auto

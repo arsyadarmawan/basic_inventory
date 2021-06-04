@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Category
+
+# Model Form Field configuration
+form: $/inventory/warehouse/models/category/fields.yaml
+
+# Model Class name
+modelClass: Inventory\Warehouse\Models\Category
+
+# Default redirect location
+defaultRedirect: inventory/warehouse/categories
+
+# Create page
+create:
+    title: Create Category
+    redirect: inventory/warehouse/categories/update/:id
+    redirectClose: inventory/warehouse/categories
+
+# Update page
+update:
+    title: Edit Category
+    redirect: inventory/warehouse/categories
+    redirectClose: inventory/warehouse/categories
+
+# Preview page
+preview:
+    title: Preview Category

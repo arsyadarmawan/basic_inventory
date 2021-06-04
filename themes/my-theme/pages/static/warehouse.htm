@@ -1,0 +1,34 @@
+title = "Informasi Gudang"
+url = "/warehouse-information"
+layout = "default"
+is_hidden = 0
+==
+    use Inventory\Warehouse\Models\Warehouse;
+    function onStart(){
+        $this['items'] = Warehouse::all();
+    }
+==
+<div class="page-header">
+    <div class="container">
+        <h1>Warehouse Information</h1>
+    </div>
+</div>
+
+<div class="container mt-20">
+    <div class="row">
+        {%for item in items%}
+            <div class="col-sm">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{item.media.getPath()}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.name}}</h5>
+                        <p class="card-text">Capacity : {{item.capacity}}</p>
+                        <p class="card-text">{{item.facility|md}}</p>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+  </div>
+
+

@@ -1,0 +1,8 @@
+1.0.1: First version of warehouse
+1.0.2:
+    - create inventory
+    - create_warehouses_table.php
+    - create_categories_table.php
+    - create_stuffs_table.php
+    - create_category_stuffs_table.php
+    - create_logs_table.php

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Log
+
+# Model Form Field configuration
+form: $/inventory/warehouse/models/log/fields.yaml
+
+# Model Class name
+modelClass: Inventory\Warehouse\Models\Log
+
+# Default redirect location
+defaultRedirect: inventory/warehouse/logs
+
+# Create page
+create:
+    title: Create Log
+    redirect: inventory/warehouse/logs/update/:id
+    redirectClose: inventory/warehouse/logs
+
+# Update page
+update:
+    title: Edit Log
+    redirect: inventory/warehouse/logs
+    redirectClose: inventory/warehouse/logs
+
+# Preview page
+preview:
+    title: Preview Log

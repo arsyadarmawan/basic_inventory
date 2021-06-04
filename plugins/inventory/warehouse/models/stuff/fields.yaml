@@ -1,0 +1,47 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    warehouse:
+        label: warehouse
+        type: recordfinder
+        list: $/inventory/warehouse/models/warehouse/columns.yaml
+        recordsPerPage: 10
+        title: Find Record
+        prompt: Click the Find button to find a warehouse
+        keyFrom: id
+        nameFrom: name
+        span: auto
+    user:
+        label: user
+        type: recordfinder
+        list: $/rainlab/user/models/user/columns.yaml
+        recordsPerPage: 10
+        title: Find Record
+        prompt: Click the Find button to find a user
+        keyFrom: id
+        nameFrom: email
+        span: auto
+    name:
+        span: auto
+        label: name
+    code:
+        span: auto
+        label: code
+        disabled: true
+    characteristic:
+        span: auto
+        label: characteristic
+        type: richeditor
+    media:
+        label: upload
+        type: fileupload
+        mode: file
+        span: auto
+tabs:
+    fields:
+        categories:
+            type: partial
+            path: $/inventory/warehouse/controllers/stuffs/_relation_categories.htm
+            tab: categories

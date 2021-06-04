@@ -1,0 +1,21 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+stuffs:
+    label: Stuffs
+    view:
+        list: $/inventory/warehouse/models/warehouse/columns.yaml
+        toolbarButtons: add|remove
+        recordsPerPage: 10
+        showSearch: true
+        defaultSort:
+            column: name
+            direction: asc
+    manage:
+        list: $/inventory/warehouse/models/warehouse/columns.yaml
+        recordsPerPage: 10
+        showSearch: true
+        defaultSort:
+            column: name
+            direction: asc
