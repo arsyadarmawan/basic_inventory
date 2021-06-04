@@ -46,10 +46,10 @@ class Inventory extends ComponentBase
         return $data;
     }
 
-    public function checkoutStuff()
+    public function onCheckoutStuff()
     {
         $user = \Auth::getUser();
-        $item = Log::where('user_id',$user->id)->where('stuff_id',(int) $this->property('stuffId'))->first();
+        $item = Log::where('user_id',$user->id)->where('stuff_id',(int) $this->property('stuffId'))->orderBy('id','DESC')->first();
         $item->out_date = now()->format('Y-m-d');
         $item->save();
 
@@ -68,7 +68,7 @@ class Inventory extends ComponentBase
     public function getLogStuff()
     {
         $user = \Auth::getUser();
-        $item = Log::where('user_id',$user->id)->where('stuff_id',$this->property('stuffId'))->first();
+        $item = Log::where('user_id',$user->id)->where('stuff_id',$this->property('stuffId'))->orderBy('id','DESC')->first();
         return $item;
     }
 
@@ -88,8 +88,38 @@ class Inventory extends ComponentBase
     
     public function allWarehouse()
     {
-        $data = Warehouse::all();
+        $data = Warehouse::where('is_active',true)->get();
         return $data;
+    }
+
+    public function onUpdateStuff()
+    {
+        $data = post();
+        if (!$user = \Auth::getUser()) {
+            throw new \ApplicationException("User not Found");
+        }
+        $stuff = Stuff::find((int) $this->property('stuffId'));
+            // find log and update log
+        $log = Log::where('stuff_id',$this->property('stuffId'))->where('user_id',$user->id)->first();
+        if ($log && $log->out_date) {
+            $log->out_date = now()->format('Y-m-d');
+            $log->save();
+        }
+
+        // update stuff warehouse
+        $stuff->warehouse_id = array_get($data,'warehouse_id');
+        $stuff->save();
+
+
+        // create new log
+        $logs = array_merge($data,['user_id' => $user->id, 'stuff_id' => (int) $this->property('stuffId')]);
+        $log = new Log;
+        $log->fill($logs);
+        $log->entry_date = now()->format('Y-m-d');
+        $log->save();
+
+        return \Redirect::to('stuff');
+
     }
 
     public function onCreateStuff()
@@ -98,7 +128,6 @@ class Inventory extends ComponentBase
         // dd($data);
         if (!$user = \Auth::getUser()) {
             throw new \ApplicationException("User not Found");
-            
         }
         // validate
         $warehouse = Warehouse::find(array_get($data,'warehouse_id'));

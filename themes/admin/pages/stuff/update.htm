@@ -1,5 +1,5 @@
-title = "Detail Stuff"
-url = "/stuff/detail/:stuffId?*"
+title = "Update Stuff"
+url = "/stuff/update/:stuffId?*"
 layout = "default"
 is_hidden = 0
 [inventory]
@@ -11,6 +11,7 @@ stuffId = "{{ :stuffId }}"
     }
 ==
 {%set log = inventory.getLogStuff()%}
+{% set items = inventory.allWarehouse() %}
 {% partial 'navigation' %}
 <div class="main-content">
     <section class="section">
@@ -27,7 +28,7 @@ stuffId = "{{ :stuffId }}"
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                  {{ form_open({ request: 'onCheckoutStuff' }) }}
+                  {{ form_open({ request: 'onUpdateStuff' }) }}
                     <div class="card-body">
                         <div class="form-group">
                           <label>Name</label>
@@ -35,7 +36,12 @@ stuffId = "{{ :stuffId }}"
                         </div>
                         <div class="form-group">
                           <label>Warehouse</label>
-                          <input disabled type="title" name="warehouse" class="form-control" value="{{stuff.warehouse ? stuff.warehouse.name : 'Already Picked' }}">
+                            <select class="form-control" name="warehouse_id" required>
+                                <option value="{{stuff.warehouse.id}}" selected>{{stuff.warehouse.name}} - Current</option>
+                                {%for i in items%}
+                                    <option value="{{i.id}}">{{i.name}} {{i.capacity}} space</option>
+                                {%endfor%}
+                            </select>
                         </div>
                         <div class="form-group">
                           <label>Entry Date</label>
@@ -52,11 +58,7 @@ stuffId = "{{ :stuffId }}"
                             <a target="_blank" href="{{stuff.media.getPath()}}">Click Here</a>
                         </div>
                         {%endif%}
-                        {%if log.out_date == null%}
-                          <button type="submit" class="btn btn-danger text-right">Checkout</button>
-                        {%else%}
-                          <a href="{{'stuff/index'|page}}" class="btn btn-info">Back</a>
-                        {%endif%}
+                          <button type="submit" class="btn btn-primary text-right">Update</button>
                         {{ form_close() }}
                     </div>
                 </div>
