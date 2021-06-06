@@ -35,11 +35,12 @@ stuffId = "{{ :stuffId }}"
                           <input type="title" name="name" class="form-control" value="{{stuff.name}}">
                         </div>
                         <div class="form-group">
-                          <label>Warehouse</label>
+                          <label>Warehouse : <b>{{stuff.warehouse.name}} - Current</b></label>
                             <select class="form-control" name="warehouse_id" required>
-                                <option value="{{stuff.warehouse.id}}" selected>{{stuff.warehouse.name}} - Current</option>
                                 {%for i in items%}
-                                    <option value="{{i.id}}">{{i.name}} {{i.capacity}} space</option>
+                                    {% if i.id != stuff.warehouse.id%}
+                                      <option value="{{i.id}}">{{i.name}} {{i.capacity}} space</option>
+                                    {%endif%}
                                 {%endfor%}
                             </select>
                         </div>

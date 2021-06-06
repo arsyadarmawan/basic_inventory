@@ -26,7 +26,7 @@ class Stuff extends Model
     protected $fillable = [
         'name',
         'warehouse_id',
-        'characteristic'
+        'user_id'
     ];
 
     /**

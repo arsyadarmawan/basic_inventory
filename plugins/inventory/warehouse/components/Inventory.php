@@ -114,9 +114,30 @@ class Inventory extends ComponentBase
             $log->save();
         }
 
+
+        // dd((int) array_get($data,'warehouse_id'));
+        // dd($stuff->warehouse->id);
+
+        if ($stuff->warehouse->id != null) {
+                $stuff->warehouse_id = (int) array_get($data,'warehouse_id');
+                $stuff->warehouse->capacity += 1;
+                $stuff->save();
+                $stuff->warehouse->save();
+
+                $warehouse = Warehouse::find((int) array_get($data,'warehouse_id'));
+                $warehouse->capacity -= 1;
+                $warehouse->save();
+        }
         // update stuff warehouse
-        $stuff->warehouse_id = array_get($data,'warehouse_id');
-        $stuff->save();
+        // if (array_get($data,'warehouse_id') != null)  {
+        //     # update stuff 
+        //     $stuff->warehouse->save();
+        //     // dd($stuff->warehouse->capacity);
+
+        //     // dd($warehouse->capacity);
+        // }
+
+        
 
 
         // create new log
@@ -126,6 +147,7 @@ class Inventory extends ComponentBase
         $log->entry_date = now()->format('Y-m-d');
         $log->save();
 
+        \Flash::success('Stuff already updated');
         return \Redirect::to('stuff');
 
     }
