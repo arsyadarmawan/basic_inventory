@@ -1,0 +1,9 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+
+export:
+    title: Export Stuff
+    modelClass: Inventory\Warehouse\Models\StuffExport
+    list: $/inventory/warehouse/models/stuffexport/columns.yaml

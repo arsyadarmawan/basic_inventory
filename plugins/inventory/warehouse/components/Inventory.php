@@ -1,6 +1,7 @@
 <?php namespace Inventory\Warehouse\Components;
 
 use Cms\Classes\ComponentBase;
+use Inventory\Warehouse\Exports\StuffLogExport;
 use Inventory\Warehouse\Models\{Stuff, Warehouse, Log, Category};
 
 class Inventory extends ComponentBase
@@ -64,6 +65,13 @@ class Inventory extends ComponentBase
         return \Redirect::to('stuff/detail/'.$stuff->id);
     }
 
+    public function onExportLog()
+    {   
+        $user = \Auth::getUser();
+        $items = Log::where('user_id',$user->id)->get();
+        $filename = 'Export_Data_Stuffs';
+        return (new StuffLogExport($user->id))->export($filename, \Maatwebsite\Excel\Excel::XLSX);
+    }
 
     public function getLogStuff()
     {

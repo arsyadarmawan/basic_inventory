@@ -1,0 +1,10 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id: Id
+    name: Stuff Name
+    code: Stuff Code
+    warehouse_name: 'Warehouse'
+    user_name: 'User'

@@ -15,6 +15,7 @@ class Stuffs extends Controller
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
         'Backend.Behaviors.RelationController',
+        'Backend.Behaviors.ImportExportController'
     ];
 
     /**
@@ -22,11 +23,12 @@ class Stuffs extends Controller
      */
     public $formConfig = 'config_form.yaml';
     public $relationConfig = 'config_relation.yaml';
+    public $listConfig = 'config_list.yaml';
+    public $importExportConfig = 'config_import_export.yaml';
 
     /**
      * @var string Configuration file for the `ListController` behavior.
      */
-    public $listConfig = 'config_list.yaml';
 
     public function __construct()
     {
@@ -34,4 +36,5 @@ class Stuffs extends Controller
 
         BackendMenu::setContext('Inventory.Warehouse', 'warehouse', 'stuffs');
     }
+
 }

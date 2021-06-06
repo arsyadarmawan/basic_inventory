@@ -12,3 +12,11 @@ columns:
     code: 
         label: code
         searchable: true
+    user:
+        relation: user
+        select: name
+        label: User
+    warehouse:
+        relation: warehouse
+        select: name
+        label: Warehouse
