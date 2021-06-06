@@ -117,28 +117,19 @@ class Inventory extends ComponentBase
 
         // dd((int) array_get($data,'warehouse_id'));
         // dd($stuff->warehouse->id);
-
-        if ($stuff->warehouse->id != null) {
-                $stuff->warehouse_id = (int) array_get($data,'warehouse_id');
-                $stuff->warehouse->capacity += 1;
-                $stuff->save();
-                $stuff->warehouse->save();
-
-                $warehouse = Warehouse::find((int) array_get($data,'warehouse_id'));
-                $warehouse->capacity -= 1;
-                $warehouse->save();
+        if ($stuff->warehouse) {
+            if ($stuff->warehouse->id != null) {
+                    $stuff->warehouse->capacity += 1;
+                    $stuff->warehouse->save();
+            }
         }
-        // update stuff warehouse
-        // if (array_get($data,'warehouse_id') != null)  {
-        //     # update stuff 
-        //     $stuff->warehouse->save();
-        //     // dd($stuff->warehouse->capacity);
 
-        //     // dd($warehouse->capacity);
-        // }
-
+        $stuff->warehouse_id = (int) array_get($data,'warehouse_id');
+        $stuff->save();
         
-
+        $warehouse = Warehouse::find((int) array_get($data,'warehouse_id'));
+        $warehouse->capacity -= 1;
+        $warehouse->save();
 
         // create new log
         $logs = array_merge($data,['user_id' => $user->id, 'stuff_id' => (int) $this->property('stuffId')]);
