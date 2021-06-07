@@ -17,7 +17,7 @@
 1. Clone to your base project directory.
 
 	```
-	git clone https://github.com/octobroid/oc-boilerplate.git <project-name>
+	git clone https://github.com/arsyadarmawan/basic_inventory.git <project-name>
 	```
 
 2. Don't forget to remove `.git` folder, create your own repository.
