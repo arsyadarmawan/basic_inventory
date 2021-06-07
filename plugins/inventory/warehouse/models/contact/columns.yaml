@@ -1,0 +1,15 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    user:
+        relation: user
+        select: name
+        label: User
+    type: 
+        searchable: true
+        label: Report Type

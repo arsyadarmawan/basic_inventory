@@ -1,0 +1,29 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    user:
+        label: user
+        type: recordfinder
+        list: $/rainlab/user/models/user/columns.yaml
+        recordsPerPage: 10
+        title: Find Record
+        prompt: Click the Find button to find a user
+        keyFrom: id
+        nameFrom: email
+        span: auto
+    type:
+        label: Type
+        type: dropdown
+        span: auto
+        options:
+            complaint: Complaint
+            maintenance: Maintenance
+            disruption: Disruption
+            stuff: Stuff
+            report: Report
+    content:
+        label: Content
+        span: auto
+        type: textarea

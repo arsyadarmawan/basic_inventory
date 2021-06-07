@@ -2,7 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use Inventory\Warehouse\Exports\StuffLogExport;
-use Inventory\Warehouse\Models\{Stuff, Warehouse, Log, Category};
+use Inventory\Warehouse\Models\{Stuff, Warehouse, Log, Category, Contact};
 
 class Inventory extends ComponentBase
 {
@@ -45,6 +45,15 @@ class Inventory extends ComponentBase
         $user = \Auth::getUser();
         $data = Log::where('user_id',$user->id)->paginate(10);
         return $data;
+    }
+
+    public function onCreateReport()
+    {
+        $data = post();
+        $report = new Contact;
+        $report->fillable($data);
+        \Flash::success('Report has been created');
+        return \Redirect::refresh();
     }
 
     public function onCheckoutStuff()

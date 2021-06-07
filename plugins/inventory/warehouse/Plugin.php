@@ -115,7 +115,13 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-circle',
                         'url'         => Backend::url('inventory/warehouse/categories'),
                         'permissions' => ['inventory.warehouse.*'],
-                    ]
+                    ],
+                    'contacts' => [
+                        'label'       => 'Reports',
+                        'icon'        => 'icon-bar-chart',
+                        'url'         => Backend::url('inventory/warehouse/contacts'),
+                        'permissions' => ['inventory.warehouse.*'],
+                    ],
                 ]
             ],
         ];
