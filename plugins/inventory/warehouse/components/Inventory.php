@@ -2,7 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use Inventory\Warehouse\Exports\StuffLogExport;
-use Inventory\Warehouse\Models\{Stuff, Warehouse, Log, Category, Contact};
+use Inventory\Warehouse\Models\{Stuff, Warehouse, Log, Category, Contact, Denom};
 
 class Inventory extends ComponentBase
 {
@@ -92,14 +92,14 @@ class Inventory extends ComponentBase
     public function listOfStuff()
     {
         $user = \Auth::getUser();
-        $list = Stuff::where('user_id',$user->id)->orderBy('id','DESC')->paginate(10);
+        $list = Stuff::orderBy('id','DESC')->paginate(10);
         return $list;
     }
 
     public function listCountStuff()
     {
         $user = \Auth::getUser();
-        $data = Stuff::where('user_id',$user->id)->orderBy('id','DESC')->count();
+        $data = Stuff::all()->count();
         return $data;
     }
     
@@ -109,6 +109,60 @@ class Inventory extends ComponentBase
         return $data;
     }
 
+    public function onCreateDenom()
+    {
+        $data = post();
+        $item = new Denom;
+        $item->name        = array_get($data,'name');
+        $item->description = array_get($data,'description');
+
+        $item->save();
+        \Flash::success('Denom already saved');
+        return \Redirect::to('denoms');
+    }
+
+    public function onDeleteStuff()
+    {
+        $data = post();
+        $item = Stuff::find((int)array_get($data,'stuff_id'));
+        $item->delete();
+        \Flash::error('Stuff Deleted');
+        return \Redirect::to('stuff');
+    }
+
+    public function onDeleteDenom()
+    {
+        $data = post();
+        $denom = Denom::find((int) array_get($data,'denom_id'));
+        $denom->delete();
+
+        \Flash::error('Category Deleted');
+        return \Redirect::refresh();
+    }
+
+
+    public function onDeleteCategory()
+    {
+        $data = post();
+        $category = Category::find((int) array_get($data,'category_id'));
+        $category->delete();
+
+        \Flash::error('Denom Deleted');
+        return \Redirect::refresh();
+    }
+
+    public function onCreateCategory()
+    {
+        $data = post();
+        $item = new Category;
+        $item->name        = array_get($data,'name');
+        $item->description = array_get($data,'description');
+
+        $item->save();
+        \Flash::success('category already saved');
+        return \Redirect::to('categories');
+    }
+
     public function onUpdateStuff()
     {
         $data = post();
@@ -116,37 +170,19 @@ class Inventory extends ComponentBase
             throw new \ApplicationException("User not Found");
         }
         $stuff = Stuff::find((int) $this->property('stuffId'));
-            // find log and update log
-        $log = Log::where('stuff_id',$this->property('stuffId'))->where('user_id',$user->id)->first();
-        if ($log && $log->out_date) {
-            $log->out_date = now()->format('Y-m-d');
-            $log->save();
-        }
-
-
-        // dd((int) array_get($data,'warehouse_id'));
-        // dd($stuff->warehouse->id);
         if ($stuff->warehouse) {
             if ($stuff->warehouse->id != null) {
                     $stuff->warehouse->capacity += 1;
                     $stuff->warehouse->save();
             }
         }
-
-        $stuff->warehouse_id = (int) array_get($data,'warehouse_id');
+        $stuff->fillable($data);
+        $stuff->denom_id = array_get($data,'denom_id');
+        $stuff->characteristic = array_get($data,'characteristic');
+        $stuff->warehouse_id =  array_get($data,'warehouse_id');
+        $stuff->category_id = array_get($data,'category_id');
         $stuff->save();
         
-        $warehouse = Warehouse::find((int) array_get($data,'warehouse_id'));
-        $warehouse->capacity -= 1;
-        $warehouse->save();
-
-        // create new log
-        $logs = array_merge($data,['user_id' => $user->id, 'stuff_id' => (int) $this->property('stuffId')]);
-        $log = new Log;
-        $log->fill($logs);
-        $log->entry_date = now()->format('Y-m-d');
-        $log->save();
-
         \Flash::success('Stuff already updated');
         return \Redirect::to('stuff');
 
@@ -155,7 +191,6 @@ class Inventory extends ComponentBase
     public function onCreateStuff()
     {
         $data = post();
-        // dd($data);
         if (!$user = \Auth::getUser()) {
             throw new \ApplicationException("User not Found");
         }
@@ -167,17 +202,9 @@ class Inventory extends ComponentBase
         }
 
         $stuff = new Stuff;
-        $stuff->user_id = $user->id;
         $stuff->fill($data);
         $stuff->save(null, post('_session_key'));
-        // if (array_get($data,'categories') != null) {
-        //     foreach (array_get($data,'categories') as $item) {
-        //         $category = Category::find((int) $item);
-        //         $stuff->categories->attach($category);
-        //     }
-        //     $item->save();
-        // }
-        
+
         $logs = array_merge($data,['user_id' => $user->id, 'stuff_id' => $stuff->id]);
         $log = new Log;
         $log->fill($logs);

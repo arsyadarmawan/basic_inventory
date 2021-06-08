@@ -26,7 +26,9 @@ class Stuff extends Model
     protected $fillable = [
         'name',
         'warehouse_id',
-        'user_id'
+        'denom_id',
+        'total',
+        'category_id'
     ];
 
     /**
@@ -68,8 +70,10 @@ class Stuff extends Model
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [
-        'warehouse' => \Inventory\Warehouse\Models\Warehouse::class,
-        'user'      => \Rainlab\User\Models\User::class,
+        'warehouse'     => \Inventory\Warehouse\Models\Warehouse::class,
+        'user'          => \Rainlab\User\Models\User::class,
+        'category'      => \Inventory\Warehouse\Models\Category::class,
+        'denom'         => \Inventory\Warehouse\Models\Denom::class
     ];
     public $belongsToMany = [
         'categories' => [

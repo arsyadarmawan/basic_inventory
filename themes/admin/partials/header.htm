@@ -111,13 +111,35 @@ code = "main-menu"
         <a href="index.html">St</a>
       </div>
       <ul class="sidebar-menu">
-          <li class="nav-item dropdown active">
-              <li class="active"><a class="nav-link" href="{{'/dashboard'}}">Manage Inventory</a></li>
-          </li>
-          <li class="nav-item dropdown">
-            <a data-request="onLogout" data-request-data="redirect: '/'">Sign out</a>
-          </li>
-        </ul>
+        <li class="nav-item dropdown active">
+            <li class="active"><a class="nav-link" href="{{'/dashboard'}}">Dashboard</a></li>
+        </li>
+
+        <li class="nav-item dropdown active">
+          <li><a class="nav-link" href="{{'/suppliers'}}">Supplier</a></li>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Stuff Master</span></a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-link" href="{{'/categories'}}">Category</a></li>
+            <li><a class="nav-link" href="{{'/denoms'}}">Denom</a></li>
+            <li><a class="nav-link" href="{{'/stuff'}}">Stuff</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>Transactions</span></a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-link" href="{{'incoming/index'|page}}">Incoming Stuff</a></li>
+            <li><a class="nav-link" href="bootstrap-badge.html">Outcoming Stuff</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a data-request="onLogout" data-request-data="redirect: '/'">Sign out</a>
+        </li>
+
+      </ul>
 
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
           <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">

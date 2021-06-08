@@ -13,16 +13,6 @@ fields:
         keyFrom: id
         nameFrom: name
         span: auto
-    user:
-        label: user
-        type: recordfinder
-        list: $/rainlab/user/models/user/columns.yaml
-        recordsPerPage: 10
-        title: Find Record
-        prompt: Click the Find button to find a user
-        keyFrom: id
-        nameFrom: email
-        span: auto
     name:
         span: auto
         label: name
@@ -30,6 +20,10 @@ fields:
         span: auto
         label: code
         disabled: true
+    total:
+        span: auto
+        type: number
+        label: Total
     characteristic:
         span: auto
         label: characteristic

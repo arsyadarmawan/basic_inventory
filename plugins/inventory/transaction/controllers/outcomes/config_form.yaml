@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Outcome
+
+# Model Form Field configuration
+form: $/inventory/transaction/models/outcome/fields.yaml
+
+# Model Class name
+modelClass: Inventory\Transaction\Models\Outcome
+
+# Default redirect location
+defaultRedirect: inventory/transaction/outcomes
+
+# Create page
+create:
+    title: Create Outcome
+    redirect: inventory/transaction/outcomes/update/:id
+    redirectClose: inventory/transaction/outcomes
+
+# Update page
+update:
+    title: Edit Outcome
+    redirect: inventory/transaction/outcomes
+    redirectClose: inventory/transaction/outcomes
+
+# Preview page
+preview:
+    title: Preview Outcome

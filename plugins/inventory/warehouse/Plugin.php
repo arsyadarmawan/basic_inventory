@@ -63,6 +63,8 @@ class Plugin extends PluginBase
 
         return [
             'Inventory\Warehouse\Components\Inventory' => 'inventory',
+            'Inventory\Transaction\Components\Transaction' => 'transaction',
+
         ];
     }
 

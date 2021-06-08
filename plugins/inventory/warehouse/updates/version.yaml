@@ -5,7 +5,5 @@
     - create_categories_table.php
     - create_stuffs_table.php
     - create_category_stuffs_table.php
+    - create_denoms_table.php 
     - create_logs_table.php
-1.0.3:
-    - create contact
-    - create_contacts_table.php

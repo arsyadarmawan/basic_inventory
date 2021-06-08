@@ -5,8 +5,11 @@ is_hidden = 0
 [inventory]
 ==
 use Inventory\Warehouse\Models\Category;
+use Inventory\Warehouse\Models\Denom;
+
   function onStart(){
     $this['categories'] = Category::all();
+    $this['denoms'] = Denom::all();
   }
 ==
 {% set items = inventory.allWarehouse() %}
@@ -41,7 +44,7 @@ use Inventory\Warehouse\Models\Category;
                         <label>Select Warehouse</label>
                         <select class="form-control" name="warehouse_id" required>
                             {%for i in items%}
-                                <option value="{{i.id}}">{{i.name}} {{i.capacity}} space</option>
+                                <option value="{{i.id}}">{{i.name}}</option>
                             {%endfor%}
                         </select>
                     </div>
@@ -50,11 +53,25 @@ use Inventory\Warehouse\Models\Category;
                       <label>Select categories</label>
                       <div>
                         {%for i in categories%}
-                          <input type="checkbox" id="vehicle3" name="categories[]" value="{{i.id}}">
-                          <label for="vehicle3">{{i.name}}</label><br><br>
+                          <input type="radio" name="category_id" value="{{i.id}}">
+                          <label for="{{i.name}}">{{i.name}}</label><br><br>
                         {%endfor%}
                       </div>
-                  </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Select Denom</label>
+                      <select class="form-control" name="denom_id" required>
+                          {%for i in denoms%}
+                              <option value="{{i.id}}">{{i.name}}</option>
+                          {%endfor%}
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Total Stock</label>
+                      <input type="number" name="total" class="form-control">
+                    </div>
 
                     <div class="form-group">
                       <label>Upload Image</label>

@@ -28,33 +28,33 @@ is_hidden = 0
                 <div class="card">
                     <div class="card-header">
                         <h4>Total Stuff : <b>{{countStuff}}</b></h4>
-                        <div class="card-header-form">
-                          <form>
-                            <div class="input-group">
-                              <a href="{{'stuff/log'|page}}" class="btn btn-info">View Log</a>
-                            </div>
-                          </form>
-                        </div>
                       </div>
                   <div class="card-body p-0">
                     <div class="table-responsive">
                       <table class="table table-striped table-md">
                         <tr>
-                          <th class="text-center">#</th>
-                          <th class="text-center">Name</th>
-                          <th class="text-center">Code</th>
-                          <th class="text-center">Place</th>
-                          <th class="text-center">Action</th>
+                          <th class="">#</th>
+                          <th class="">Name</th>
+                          <th class="">Warehouse</th>
+                          <th class="">Category</th>
+                          <th class="">Total</th>
+                          <th class="">Denom</th>
+                          <th class="">Action</th>
                         </tr>
                         {%for k,item in items %}
-                            <tr class="text-center">
+                            <tr class="">
                                 <td>{{k+1}}</td>
                                 <td>{{item.name}}</td>
-                                <td>{{item.code}}</td>
                                 <td>{{item.warehouse.name}}</td>
+                                <td>{{item.category.name}}</td>
+                                <td>{{item.total}}</td>
+                                <td>{{item.denom.name}}</td>
                                 <td>
                                   <a href="{{'stuff/detail'|page({stuffId : item.id})}}" class="btn btn-secondary">Detail</a>
-                                  <a href="{{'stuff/update'|page({stuffId : item.id})}}" class="btn btn-info">Update</a>
+                                  {{ form_open({ request: 'onDeleteStuff' }) }}
+                                    <input type="hidden" name="stuff_id" value="{{item.id}}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                  {{form_close()}}
                                 </td>
                             </tr>
                         {%endfor%}

@@ -12,9 +12,12 @@ class CreateStuffsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('warehouse_id')->nullable();
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('denom_id')->nullable();
+            $table->unsignedInteger('category_id')->nullable();
+
             $table->string('name')->nullable();
             $table->string('code')->nullable();
+            $table->unsignedInteger('total')->nullable();
             $table->string('characteristic')->nullable();
             $table->timestamps();
         });

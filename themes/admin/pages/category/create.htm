@@ -1,0 +1,46 @@
+title = "Create Stuff"
+url = "/category/create"
+layout = "default"
+is_hidden = 0
+[inventory]
+==
+use Inventory\Warehouse\Models\Category;
+  function onStart(){
+    $this['categories'] = Category::all();
+  }
+==
+{% set items = inventory.allWarehouse() %}
+{% partial 'navigation' %}
+<div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>Inventory Integration System</h1>
+        <div class="section-header-breadcrumb">
+          <div class="breadcrumb-item"><a href="{{'category/index'|page}}">Index</a></div>
+        </div>
+      </div>
+
+      <div class="section-body">
+        <h2 class="section-title">Create Category</h2>
+        {{ form_open({ request: 'onCreateCategory' }) }}
+            <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                    <label>Name</label>
+                    <input type="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" name="description" id="" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary text-right">Create</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        {{ form_close() }}
+      </div>
+    </section>
+  </div>

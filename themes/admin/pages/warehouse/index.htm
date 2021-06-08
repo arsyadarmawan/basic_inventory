@@ -45,14 +45,12 @@ is_hidden = 0
                         <tr>
                           <th>#</th>
                           <th>Name</th>
-                          <th>Capacity</th>
                           <th>Status</th>
                         </tr>
                         {%for k,item in items %}
                             <tr>
                                 <td>{{k+1}}</td>
                                 <td>{{item.name}}</td>
-                                <td>{{item.capacity}}</td>
                                 {%if item.is_active %}
                                     <td><div class="badge badge-success">Active</div></td>
                                 {%else%}

@@ -11,7 +11,7 @@ is_hidden = 0
         $user = \Auth::getUser();
         $this['warehouses'] = Warehouse::all();
         $this['categories'] = Category::all();
-        $this['stuff'] = Stuff::where('user_id',$user->id)->count();
+        $this['stuff'] = Stuff::all()->count();
     }
 ==
 <body>
@@ -51,7 +51,7 @@ is_hidden = 0
                   We Have Total <b>{{warehouses.count()}}</b> Active Warehouse
                 </div>
                 <div class="card-footer text-right">
-                  <a target="_blank" href="{{'warehouse/index'|page}}" class="btn btn-info">Check Warehouses</a>
+                  <a href="{{'warehouse/index'|page}}" class="btn btn-info">Check Warehouses</a>
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@ is_hidden = 0
                   We Have Total <b>{{categories.count()}}</b> Category
                 </div>
                 <div class="card-footer text-right">
-                  <a target="_blank" href="{{'category/index'|page}}" class="btn btn-primary">Check Categories</a>
+                  <a href="{{'category/index'|page}}" class="btn btn-primary">Check Categories</a>
                 </div>
               </div>
             </div>

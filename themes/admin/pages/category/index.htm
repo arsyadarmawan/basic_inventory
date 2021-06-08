@@ -2,11 +2,11 @@ title = "List Category"
 url = "/categories"
 layout = "default"
 is_hidden = 0
-
+[inventory]
 ==
     use Inventory\Warehouse\Models\Category;
     function onStart(){
-        $this['items'] = Category::all();
+        $this['items'] = Category::orderBy('id','DESC')->paginate(10);
     }
 ==
 {% partial 'navigation' %}
@@ -14,7 +14,7 @@ is_hidden = 0
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>SISTER!</h1>
+            <h1>Inventory Integration System</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item"><a href="{{'home'|page}}">Dashboard</a></div>
               <div class="breadcrumb-item"><a href="#">Category</a></div>
@@ -22,7 +22,7 @@ is_hidden = 0
           </div>
 
           <div class="section-body">
-            <h2 class="section-title">Inventory Integration System </h2>
+            <h2 class="section-title">Category </h2>
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -46,19 +46,19 @@ is_hidden = 0
                           <th>#</th>
                           <th>Name</th>
                           <th>Description</th>
-                          <th>has image ?</th>
+                          <th>Action</th>
                         </tr>
                         {%for k,item in items %}
                             <tr>
                                 <td>{{k+1}}</td>
                                 <td>{{item.name}}</td>
                                 <td>{{item.description|md}}</td>
+
                                 <td>
-                                    {%if item.media %}
-                                        <a target="_blank" class="btn btn-success" href="{{item.media.getPath()}}">YES</a>
-                                    {%else%}
-                                        NO
-                                    {%endif%}
+                                  {{ form_open({ request: 'onDeleteCategory' }) }}
+                                      <input type="hidden" name="category_id" value="{{item.id}}">
+                                      <button type="submit" class="btn btn-danger">Delete</button>
+                                  {{form_close()}}
                                 </td>
                             </tr>
                         {%endfor%}
@@ -66,21 +66,9 @@ is_hidden = 0
                 </div>
             </div>
             <div class="card-footer text-right">
-                    <nav class="d-inline-block">
-                      <ul class="pagination mb-0">
-                        <li class="page-item disabled">
-                          <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                          <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                        </li>
-                      </ul>
-                    </nav>
+                <a href="{{ 'category/create'|page }}" class="btn btn-primary mb-4">Create Category</a>
+                   <br>
+                   {{ items.render|raw }}
                   </div>
                 </div>
               </div>

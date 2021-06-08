@@ -22,7 +22,10 @@ class Category extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'description'
+    ];
 
     /**
      * @var array Validation rules for attributes
@@ -61,16 +64,11 @@ class Category extends Model
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [];
-    public $belongsTo = [];
-    public $belongsToMany = [
-        'stuffs' => [
-            'Inventory\Warehouse\Models\Stuff',
-            'table'     => 'inventory_warehouse_category_stuffs',
-            'key'       => 'category_id',
-            'otherKey'  => 'stuff_id',
-        ]
+    public $hasMany = [
+        'stuffs'   => \Inventory\Warehouse\Models\Stuff::class,
     ];
+    public $belongsTo = [];
+    public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];

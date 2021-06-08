@@ -44,14 +44,7 @@ stuffId = "{{ :stuffId }}"
                                 {%endfor%}
                             </select>
                         </div>
-                        <div class="form-group">
-                          <label>Entry Date</label>
-                          <input type="text" name="purpose" class="form-control" disabled value="{{log.entry_date|date('Y-m-d')}}">
-                        </div>
-                        <div class="form-group">
-                            <label>Out Date</label>
-                            <input type="text" name="purpose" class="form-control" disabled value="{{ log.out_date ? log.out_date|date('Y-m-d') : null }}">
-                        </div>
+
                         {%if stuff.media.getPath()%}
                         <div class="form-group">
                             <label>Image </label>

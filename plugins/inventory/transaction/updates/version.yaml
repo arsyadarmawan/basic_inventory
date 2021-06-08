@@ -1,0 +1,7 @@
+1.0.1: First version of transaction
+1.0.2:
+    - create incoming stuff table
+    - create_supplies_table.php
+1.0.3:
+    - create outcome stuff table
+    - create_outcomes_table.php
