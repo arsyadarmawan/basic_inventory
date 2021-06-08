@@ -62,7 +62,10 @@ class Outcome extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [];
+    public $belongsTo = [
+        'stuff'         => \Inventory\Warehouse\Models\Stuff::class,
+        'user'          => \Rainlab\User\Models\User::class,
+    ];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];

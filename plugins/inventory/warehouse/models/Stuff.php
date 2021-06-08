@@ -68,7 +68,10 @@ class Stuff extends Model
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [];
+    public $hasMany = [
+        'supplies'         => \Inventory\Transaction\Models\Supply::class,
+        'outcomes'         =>  \Inventory\Transaction\Models\Supply::class,
+    ];
     public $belongsTo = [
         'warehouse'     => \Inventory\Warehouse\Models\Warehouse::class,
         'user'          => \Rainlab\User\Models\User::class,
