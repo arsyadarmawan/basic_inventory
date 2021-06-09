@@ -1,3 +1,6 @@
 [submodule "plugins/responsiv/uploader"]
 	path = plugins/responsiv/uploader
 	url = https://github.com/responsiv/uploader-plugin.git
+[submodule "plugins/renation/dynamicpdf"]
+	path = plugins/renation/dynamicpdf
+	url = https://github.com/mplodowski/dynamicpdf-plugin.git

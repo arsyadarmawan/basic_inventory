@@ -1,4 +1,4 @@
-title = "Create Stuff"
+title = "Outcoming Stuff"
 url = "/outcoming/create"
 layout = "default"
 is_hidden = 0
@@ -7,10 +7,12 @@ is_hidden = 0
 ==
 use Inventory\Warehouse\Models\Category;
 use Inventory\Warehouse\Models\Denom;
+use Rainlab\User\Models\User as UserModel;
 
   function onStart(){
     $this['categories'] = Category::all();
     $this['denoms'] = Denom::all();
+    $this['suppliers']  = UserModel::all();
   }
 ==
 {% set items = inventory.listOfStuff()%}
@@ -49,6 +51,18 @@ use Inventory\Warehouse\Models\Denom;
                       <label>Total Supply</label>
                       <input type="number" name="sum" class="form-control" required>
                     </div>
+
+                    <div class="form-group">
+                      <label>Supplier (optional)</label>
+                      <select class="form-control" name="supplier_id" required>
+                          <option >Select Supplier </optswion>
+                          {%for i in suppliers%}
+                              {%if user.id != i.id%}
+                                <option value="{{i.id}}">{{i.name}}</option>
+                              {%endif%}
+                          {%endfor%}
+                      </select>
+                  </div>
 
                     <button type="submit" class="btn btn-primary text-right">Create</button>
                 </div>

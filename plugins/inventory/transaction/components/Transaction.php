@@ -26,6 +26,7 @@ class Transaction extends ComponentBase
         $item->entry_date = Carbon::parse(array_get($data,'entry_date'))->format('Y-m-d');
         $item->stuff_id = array_get($data,'stuff_id');
         $item->sum = (int) array_get($data,'sum');
+        $item->user_id = array_get($data,'supplier_id');
         $item->save();
 
         $item->stuff->total += (int) array_get($data,'sum');
@@ -51,9 +52,10 @@ class Transaction extends ComponentBase
     {
         $data = post();
         $item = new Outcome;
-        $item->entry_date = Carbon::parse(array_get($data,'entry_date'))->format('Y-m-d');
+        $item->out_date = Carbon::parse(array_get($data,'entry_date'))->format('Y-m-d');
         $item->stuff_id = array_get($data,'stuff_id');
         $item->sum = (int) array_get($data,'sum');
+        $item->user_id = array_get($data,'supplier_id');
         
         $item->stuff->total -= (int) array_get($data,'sum');
         if ($item->stuff->total < 0 ) {
@@ -65,5 +67,6 @@ class Transaction extends ComponentBase
             $item->stuff->save();
         }
         \Flash::success('Supply stuff already created');
+        return \Redirect::to('outcoming/stuff');
     }
 }

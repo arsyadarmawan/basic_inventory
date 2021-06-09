@@ -53,7 +53,7 @@ use Inventory\Warehouse\Models\Denom;
                       <label>Select categories</label>
                       <div>
                         {%for i in categories%}
-                          <input type="radio" name="category_id" value="{{i.id}}">
+                          <input type="radio" name="category_id" value="{{i.id}}" required>
                           <label for="{{i.name}}">{{i.name}}</label><br><br>
                         {%endfor%}
                       </div>
@@ -70,7 +70,7 @@ use Inventory\Warehouse\Models\Denom;
 
                     <div class="form-group">
                       <label>Total Stock</label>
-                      <input type="number" name="total" class="form-control">
+                      <input type="number" name="total" class="form-control" required>
                     </div>
 
                     <div class="form-group">

@@ -40,6 +40,34 @@ class Inventory extends ComponentBase
         $stuff->bindModel('media', ($this->property('stuffId') ? Stuff::find((int)$this->property('stuffId')) : new Stuff));   
     }
 
+    public function onCreateSupplier()
+    {
+        $data = post();
+
+        $validator = \Validator::make($data, [
+            'name'              => 'required',
+            'email'             => 'required|email',
+            'phone'             => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            throw new \ApplicationException($validator->messages()->first());
+        }
+
+        $user = \Auth::register([
+            'name' => array_get($data,'name'),
+            'email' => array_get($data,'email'),
+            'password' => 'admin123',
+            'password_confirmation' => 'admin123',
+        ],true);
+
+        $user->phone = array_get($data,'phone');
+        $user->save();
+
+        \Flash::success('Supplier Created');
+        return \Redirect::to('suppliers');
+    }
+
     public function logs()
     {
         $user = \Auth::getUser();
@@ -126,6 +154,8 @@ class Inventory extends ComponentBase
         $data = post();
         $item = Stuff::find((int)array_get($data,'stuff_id'));
         $item->delete();
+        $item->supplies()->delete();
+        $item->outcomes()->delete();
         \Flash::error('Stuff Deleted');
         return \Redirect::to('stuff');
     }
@@ -190,29 +220,40 @@ class Inventory extends ComponentBase
 
     public function onCreateStuff()
     {
-        $data = post();
-        if (!$user = \Auth::getUser()) {
-            throw new \ApplicationException("User not Found");
+        try {
+            //code...
+            $data = post();
+            $validator = \Validator::make($data, [
+                'name'              => 'required',
+                'characteristic'    => 'required',
+                'warehouse_id'      => 'required',
+                'category_id'       => 'required',
+                'denom_id'          => 'required',
+                'total'             => 'required',
+            ]);
+    
+    
+            if ($validator->fails()) {
+                // The given data did not pass validation
+                throw new \ApplicationException($validator->messages()->first());
+                return Redirect::refresh();
+            }
+    
+            // validate
+            $warehouse = Warehouse::find(array_get($data,'warehouse_id'));
+            if ($warehouse->capacity <= 0 || !$warehouse->is_active) {
+                \Flash::error('This warehouse doesnt have space anymore or doesnt exist');
+                return \Redirect::to('stuff/create');
+            }
+    
+            $stuff = new Stuff;
+            $stuff->fill($data);
+            $stuff->save(null, post('_session_key'));    
+            \Flash::success('Data has been created');
+            return \Redirect::to('stuff');
+        } catch (Exception $e) {
+            Db::rollBack();
+            throw new \ApplicationException($e->getMessage());
         }
-        // validate
-        $warehouse = Warehouse::find(array_get($data,'warehouse_id'));
-        if ($warehouse->capacity <= 0 || !$warehouse->is_active) {
-            \Flash::error('This warehouse doesnt have space anymore or doesnt exist');
-            return \Redirect::to('stuff/create');
-        }
-
-        $stuff = new Stuff;
-        $stuff->fill($data);
-        $stuff->save(null, post('_session_key'));
-
-        $logs = array_merge($data,['user_id' => $user->id, 'stuff_id' => $stuff->id]);
-        $log = new Log;
-        $log->fill($logs);
-        $log->entry_date = now()->format('Y-m-d');
-        $log->save();
-
-
-        \Flash::success('Data has been created');
-        return \Redirect::to('stuff');
     }   
 }

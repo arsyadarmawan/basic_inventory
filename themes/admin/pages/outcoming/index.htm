@@ -23,8 +23,7 @@ is_hidden = 0
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                   <div class="card-header">
-                      <a href="" class="btn btn-dark">Export</a>
-                        <h4></h4>
+                    <h4>Total Incoming Stuff <b>{{items.count()}}</b></h4>
                       </div>
                   <div class="card-body p-0">
                     <div class="table-responsive">
@@ -44,7 +43,7 @@ is_hidden = 0
                                 <td>{{item.stuff.name}}</td>
                                 <td>{{item.stuff.warehouse.name}}</td>
                                 <td>{{item.date|date('Y-m-d')}}</td>
-                                <td>{{item.sum}}</td>
+                                <td>- {{item.sum}}</td>
                                 <td>{{item.stuff.denom.name}}</td>
                                 <td>{{item.user.name}}</td>
                             </tr>

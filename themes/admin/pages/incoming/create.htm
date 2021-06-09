@@ -7,10 +7,12 @@ is_hidden = 0
 ==
 use Inventory\Warehouse\Models\Category;
 use Inventory\Warehouse\Models\Denom;
+use Rainlab\User\Models\User as UserModel;
 
   function onStart(){
     $this['categories'] = Category::all();
-    $this['denoms'] = Denom::all();
+    $this['denoms']     = Denom::all();
+    $this['suppliers']  = UserModel::all();
   }
 ==
 {% set items = inventory.listOfStuff()%}
@@ -43,15 +45,27 @@ use Inventory\Warehouse\Models\Denom;
 
                     <div class="form-group">
                         <label>Date Picker</label>
-                        <input type="date" name="entry_date" class="form-control datepicker" required>
+                        <input id="datePicker" type="date" name="entry_date" class="form-control datepicker" required>
                     </div>
 
                     <div class="form-group">
                       <label>Total Supply</label>
                       <input type="number" name="sum" class="form-control" required>
                     </div>
+                    
+                    <div class="form-group">
+                      <label>Supplier (optional)</label>
+                      <select class="form-control" name="supplier_id" required>
+                          <option >Select Supplier </optswion>
+                          {%for i in suppliers%}
+                              {%if user.id != i.id%}
+                                <option value="{{i.id}}">{{i.name}}</option>
+                              {%endif%}
+                          {%endfor%}
+                      </select>
+                  </div>
 
-                    <button type="submit" class="btn btn-primary text-right">Create</button>
+                    <button type="submit" onclick="onAlert()" class="btn btn-primary text-right">Create</button>
                 </div>
                 </div>
             </div>
@@ -60,3 +74,10 @@ use Inventory\Warehouse\Models\Denom;
       </div>
     </section>
   </div>
+
+  <script>
+  function onAlert() {
+    alert("Are you Sure?");
+  }
+    document.getElementById('datePicker').value = new Date().toDateInputValue();
+  </script>

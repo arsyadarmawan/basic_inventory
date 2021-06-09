@@ -29,79 +29,74 @@ stuffId = "{{ :stuffId }}"
       </div>
 
       <div class="section-body">
-        <h2 class="section-title">Create Module</h2>
+        <h2 class="section-title">Create Stuff</h2>
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                   {{ form_open({ request: 'onUpdateStuff' }) }}
                     <div class="card-body">
-                        <div class="form-group">
-                          <label>Name</label>
-                          <input type="title" name="name" class="form-control" value="{{stuff.name}}">
-                        </div>
+                      <div class="form-group">
+                        <label>Name</label>
+                        <input type="title" name="name" class="form-control" value="{{stuff.name}}">
+                      </div>
 
-                        <div class="form-group">
-                          <label>Name</label>
-                          <input type="title" name="code" class="form-control" value="{{stuff.code}}">
-                        </div>
+                      <div class="form-group">
+                        <label>Code</label>
+                        <input type="title" name="code" class="form-control" disabled value="{{stuff.code}}">
+                      </div>
 
-                        <div class="form-group">
-                          <label>Description</label>
-                          <textarea name="characteristic" id="" class="form-control">{{stuff.characteristic}}</textarea>
-                        </div>
+                      <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="characteristic" id="" class="form-control">{{stuff.characteristic}}</textarea>
+                      </div>
 
-                        <div class="form-group">
-                          <label>Warehouse : <b>{{stuff.warehouse.name}} - Current</b></label>
-                            <select class="form-control" name="warehouse_id" required>
-                                {%for i in items%}
-                                    {% if i.id != stuff.warehouse.id%}
-                                      <option value="{{i.id}}">{{i.name}}</option>
-                                    {%endif%}
-                                {%endfor%}
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                          <label>Select categories</label>
-                          <div>
-                            {%for i in categories%}
-                              <input type="radio" name="category_id" value="{{i.id}}">
-                              <label for="{{i.name}}">{{i.name}}</label><br><br>
-                            {%endfor%}
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label>Select Denom</label>
-                          <select class="form-control" name="denom_id" required>
-                              {%for i in denoms%}
-                                  <option value="{{i.id}}">{{i.name}}</option>
+                      <div class="form-group">
+                        <label>Warehouse : <b>{{stuff.warehouse.name}} - Current</b></label>
+                          <select class="form-control" name="warehouse_id" required>
+                              {%for i in items%}
+                                  {% if i.id != stuff.warehouse.id%}
+                                    <option value="{{i.id}}">{{i.name}}</option>
+                                  {%endif%}
                               {%endfor%}
                           </select>
-                        </div>
+                      </div>
 
-                        <div class="form-group">
-                          <label>Total Stock</label>
-                          <input type="number" name="total" class="form-control" value="{{stuff.total}}">
-                        </div>
-
-                        {%if stuff.media.getPath()%}
-                        <div class="form-group">
-                            <label>Image </label>
-                            <br>
-                            <a target="_blank" href="{{stuff.media.getPath()}}">Click Here</a>
-                        </div>
-                        {%endif%}
+                      <div class="form-group">
+                        <label>Select categories</label>
                         <div>
-                          <button type="submit" class="btn btn-info text-right">Update</button>
-
-                          {{ form_close() }}
-                          {{ form_open({ request: 'onDeleteStuff' }) }}
-                          <input type="hidden" name="stuff_id" value="{{stuff.id}}">
-                          <button type="submit" class="btn btn-danger text-right">Delete</button>
-                          {{form_close()}}
+                          {%for i in categories%}
+                            <input type="radio" name="category_id" value="{{i.id}}">
+                            <label for="{{i.name}}">{{i.name}}</label><br><br>
+                          {%endfor%}
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <label>Select Denom</label>
+                        <select class="form-control" name="denom_id" required>
+                            {%for i in denoms%}
+                                <option value="{{i.id}}">{{i.name}}</option>
+                            {%endfor%}
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Total Stock</label>
+                        <input type="number" name="total" class="form-control" value="{{stuff.total}}">
+                      </div>
+
+                      {%if stuff.media.getPath()%}
+                      <div class="form-group">
+                          <label>Image </label>
+                          <br>
+                          <a target="_blank" href="{{stuff.media.getPath()}}">Click Here</a>
+                      </div>
+                      {%endif%}
+                      <div class="d-flex">
+                          <button type="submit" class="btn btn-info text-right mr-2">Update</button>
+                        </div>
+                    </div>
+                  {{ form_close() }}
                 </div>
             </div>
             </div>
