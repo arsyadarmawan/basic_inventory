@@ -22,6 +22,10 @@ class Transaction extends ComponentBase
     public function onCreateSupply()
     {
         $data = post();
+        if ((int) array_get($data,'sum') < 0) {
+            \Flash::error('Data less than 0, please check again');
+            return redirect()->refresh();   
+        }
         $item = new Supply;
         $item->entry_date = Carbon::parse(array_get($data,'entry_date'))->format('Y-m-d');
         $item->stuff_id = array_get($data,'stuff_id');
@@ -48,9 +52,31 @@ class Transaction extends ComponentBase
         return $items;
     }
 
+    public function onDeleteSupply()
+    {
+        $data = post();
+        $item = Supply::find((int) array_get($data,'supply_id'));
+        $item->delete();
+        \Flash::error('Log already updated');
+        return \Redirect::refresh();
+    }
+
+    public function onDeleteOutcome()
+    {
+        $data = post();
+        $item = Outcome::find((int) array_get($data,'outcome_id'));
+        $item->delete();
+        \Flash::error('Log already updated');
+        return \Redirect::refresh();
+    }
+
     public function onCreateOutcome()
     {
         $data = post();
+        if ((int) array_get($data,'sum') < 0) {
+            \Flash::error('Data less than 0, please check again');
+            return redirect()->refresh();   
+        }
         $item = new Outcome;
         $item->out_date = Carbon::parse(array_get($data,'entry_date'))->format('Y-m-d');
         $item->stuff_id = array_get($data,'stuff_id');

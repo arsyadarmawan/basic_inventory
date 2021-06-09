@@ -55,7 +55,7 @@ is_hidden = 0
                                   <div class="d-flex">
                                     {{ form_open({ request: 'onDeleteStuff' }) }}
                                       <input type="hidden" name="stuff_id" value="{{item.id}}">
-                                      <button type="submit" class="btn btn-danger">Delete</button>
+                                      <button type="submit" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">Delete</button>
                                     {{form_close()}}
                                   </div>
                                 </td>
@@ -84,4 +84,9 @@ is_hidden = 0
         window.location = $(this).data("href");
     });
 });
+
+  function validation() {
+    alert("Are you to delete ?");
+  }
+
 </script>

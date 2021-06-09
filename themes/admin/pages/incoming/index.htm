@@ -36,6 +36,7 @@ is_hidden = 0
                           <th class="text-center">Total</th>
                           <th class="text-center">Denom</th>
                           <th class="text-center">Supplier Name (Optional)</th>
+                          <th class="text-center">Action</th>
                         </tr>
                         {%for k,item in items %}
                             <tr class="text-center">
@@ -46,6 +47,12 @@ is_hidden = 0
                                 <td>{{item.sum}}</td>
                                 <td>{{item.stuff.denom.name}}</td>
                                 <td>{{item.user.name}}</td>
+                                <td> 
+                                  {{ form_open({ request: 'onDeleteSupply' }) }}
+                                    <input type="hidden" name="supply_id" value="{{item.id}}">
+                                    <button type="submit" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">Delete</button>
+                                  {{form_close()}}
+                                </td>
                             </tr>
                         {%endfor%}
                     </table>

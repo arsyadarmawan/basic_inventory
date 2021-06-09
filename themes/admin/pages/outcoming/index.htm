@@ -1,4 +1,4 @@
-title = "List Stuff"
+title = "Outcoming Stuff"
 url = "/outcoming/stuff"
 layout = "default"
 is_hidden = 0
@@ -36,6 +36,7 @@ is_hidden = 0
                           <th class="text-center">Total</th>
                           <th class="text-center">Denom</th>
                           <th class="text-center">Supplier Name (Optional)</th>
+                          <th class="text-center">Action</th>
                         </tr>
                         {%for k,item in items %}
                             <tr class="text-center">
@@ -46,6 +47,12 @@ is_hidden = 0
                                 <td>- {{item.sum}}</td>
                                 <td>{{item.stuff.denom.name}}</td>
                                 <td>{{item.user.name}}</td>
+                                <td>
+                                  {{ form_open({ request: 'onDeleteOutcome' }) }}
+                                    <input type="hidden" name="outcome_id" value="{{item.id}}">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete ?')">Delete</button>
+                                  {{form_close()}}
+                                </td>
                             </tr>
                         {%endfor%}
                     </table>
