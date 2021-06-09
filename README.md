@@ -1,4 +1,4 @@
-# OctoberCMS Boilerplate
+# Inventory System
 *by Octobro*
 
 ---
