@@ -1,10 +1,10 @@
-title = "Outcoming Stuff"
-url = "/outcoming/stuff"
+title = "Adjustment Stuff"
+url = "/addjustment/stuff"
 layout = "default"
 is_hidden = 0
 [transaction]
 ==
- {%set items = transaction.listDataOutcome() %}
+ {%set items = transaction.listDataAddjustment() %}
 {% partial 'navigation' %}  
       <div class="main-content">
         <section class="section">
@@ -16,14 +16,14 @@ is_hidden = 0
           </div>
 
           <div class="section-body">
-            <h2 class="section-title">Outcoming Stuff </h2>
+            <h2 class="section-title">Addjsutment Stuff </h2>
 
 
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Total Incoming Stuff <b>{{items.count()}}</b></h4>
+                    <h4>Adjustemnt Stuff <b>{{items.count()}}</b></h4>
                       </div>
                   <div class="card-body p-0">
                     <div class="table-responsive">
@@ -32,21 +32,18 @@ is_hidden = 0
                           <th class="text-center">#</th>
                           <th class="text-center">Stuff</th>
                           <th class="text-center">Stuff Location</th>
-                          <th class="text-center">Outcoming Date</th>
                           <th class="text-center">Total</th>
                           <th class="text-center">Denom</th>
                           <th class="text-center">Supplier Name (Optional)</th>
                           <th class="text-center">Action</th>
                         </tr>
                         {%for k,item in items %}
-                          <tr class="" data-href="{{'adjustment/detail'|page({stuffId : item.stuff.id})}}" style="cursor: pointer;">
+                            <tr class="text-center">
                                 <td>{{k+1}}</td>
                                 <td>{{item.stuff.name}}</td>
                                 <td>{{item.stuff.warehouse.name}}</td>
-                                <td>{{item.date|date('Y-m-d')}}</td>
-                                <td>- {{item.sum}}</td>
+                                <td>{{item.count}}</td>
                                 <td>{{item.stuff.denom.name}}</td>
-                                <td>{{item.user.name}}</td>
                                 <td>
                                   {{ form_open({ request: 'onDeleteOutcome' }) }}
                                     <input type="hidden" name="outcome_id" value="{{item.id}}">
@@ -59,7 +56,7 @@ is_hidden = 0
                 </div>
             </div>
             <div class="card-footer text-right">
-                      <a href="{{ 'outcoming/create'|page }}" class="btn btn-primary mb-4">Create</a>
+                      <a href="{{ 'adjustment/create'|page }}" class="btn btn-primary mb-4">Create</a>
                       <br>
                       {{ items.render|raw }}
                   </div>
@@ -70,10 +67,3 @@ is_hidden = 0
           </div>
         </section>
       </div>
-
-      <script>
-        jQuery(document).ready(function($) {
-          $('*[data-href]').on('click', function() {
-              window.location = $(this).data("href");
-          });
-      });

@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Inventory\Warehouse\Exports\StuffLogExport;
 use Inventory\Warehouse\Models\{Stuff, Warehouse, Log, Category, Contact, Denom};
+use Rainlab\User\Models\User;
 
 class Inventory extends ComponentBase
 {
@@ -68,11 +69,34 @@ class Inventory extends ComponentBase
         return \Redirect::to('suppliers');
     }
 
+    public function onDeleteSupplier()
+    {
+        $data = post();
+        $item = User::findByEmail(array_get($data,'email'));
+        $item->delete();
+        \Flash::error('supplier has been deleted');
+        return redirect()->refresh();
+    }
+
     public function logs()
     {
         $user = \Auth::getUser();
         $data = Log::where('user_id',$user->id)->paginate(10);
         return $data;
+    }
+
+    public function onCreateWarehouse()
+    {   
+        $data = post();
+        $item = new Warehouse;
+        $item->fillable($data);
+        $item->name = array_get($data,'name');
+        $item->facility = array_get($data,'facility');
+        $item->capacity = array_get($data,'capacity');
+        $item->is_active = true;
+        $item->save();
+        \Flash::success('Warehouse created');
+        return \Redirect::to('/warehouse');
     }
 
     public function onCreateReport()
@@ -160,6 +184,15 @@ class Inventory extends ComponentBase
         return \Redirect::to('stuff');
     }
 
+    public function onDeleteWarehouse()
+    {
+        $data = post();
+        $item = Warehouse::find((int)array_get($data,'warehouse_id'));
+        $item->delete();
+        \Flash::error('Warehouse Deleted');
+        return \Redirect::to('warehouse');
+    }
+
     public function onDeleteDenom()
     {
         $data = post();
@@ -170,7 +203,20 @@ class Inventory extends ComponentBase
         return \Redirect::refresh();
     }
 
-
+    public function onUpdateWarehouse()
+    {
+        $data = post();
+        $item = Warehouse::find((int) array_get($data,'id'));
+        $item->id;
+        $item->fillable($data);
+        $item->name = array_get($data,'name');
+        $item->facility = array_get($data,'facility');
+        $item->capacity = array_get($data,'capacity');
+        $item->is_active = true;
+        $item->save();
+        \Flash::success('Warehouse updated');
+        return \Redirect::to('/warehouse');
+    }
     public function onDeleteCategory()
     {
         $data = post();

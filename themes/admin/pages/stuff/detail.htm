@@ -1,4 +1,4 @@
-title = "Detail Stuff"
+title = "Edit Stuff"
 url = "/stuff/detail/:stuffId?*"
 layout = "default"
 is_hidden = 0
@@ -15,7 +15,6 @@ stuffId = "{{ :stuffId }}"
         $this['denoms'] = Denom::all();
     }
 ==
-{%set log = inventory.getLogStuff()%}
 {% set items = inventory.allWarehouse() %}
 {% partial 'navigation' %}
 <div class="main-content">
@@ -47,7 +46,7 @@ stuffId = "{{ :stuffId }}"
 
                       <div class="form-group">
                         <label>Description</label>
-                        <textarea name="characteristic" id="" class="form-control">{{stuff.characteristic}}</textarea>
+                        <input type="text" name="characteristic" id="" value="{{stuff.characteristic|md}}" class="form-control">
                       </div>
 
                       <div class="form-group">

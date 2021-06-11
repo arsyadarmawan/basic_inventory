@@ -5,3 +5,9 @@
 1.0.3:
     - create outcome stuff table
     - create_outcomes_table.php
+1.0.4:
+    - add initial supply table
+    - add_from_to_transaction_table.php
+1.0.5:
+    - create adjustment table
+    - create_addjustments_table.php

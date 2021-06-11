@@ -2,7 +2,7 @@ title = "List Warehouse"
 url = "/warehouse"
 layout = "default"
 is_hidden = 0
-
+[inventory]
 ==
     use Inventory\Warehouse\Models\Warehouse;
     function onStart(){
@@ -48,20 +48,22 @@ is_hidden = 0
                           <th>Status</th>
                         </tr>
                         {%for k,item in items %}
-                            <tr>
+                            <tr class="" data-href="{{'warehouse/edit'|page({stuffId : item.id})}}" style="cursor: pointer;">
                                 <td>{{k+1}}</td>
                                 <td>{{item.name}}</td>
-                                {%if item.is_active %}
-                                    <td><div class="badge badge-success">Active</div></td>
-                                {%else%}
-                                    <td><div class="badge badge-danger">Not Active</div></td>
-                                {%endif%}
+                                <td>
+                                  {{ form_open({ request: 'onDeleteWarehouse' }) }}
+                                  <input type="hidden" name="warehouse_id" value="{{item.id}}">
+                                  <button type="submit" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">Delete</button>
+                                  {{form_close()}}
+                                </td>
                             </tr>
                         {%endfor%}
                     </table>
                 </div>
             </div>
             <div class="card-footer text-right">
+                  <a href="{{'warehouse/create'|page}}" class="btn btn-primary">Create</a>
                     {{items.render|raw}}
                   </div>
                 </div>
@@ -71,3 +73,16 @@ is_hidden = 0
           </div>
         </section>
       </div>
+
+      <script>
+        jQuery(document).ready(function($) {
+          $('*[data-href]').on('click', function() {
+              window.location = $(this).data("href");
+          });
+      });
+      
+        function validation() {
+          alert("Are you to delete ?");
+        }
+      
+      </script>

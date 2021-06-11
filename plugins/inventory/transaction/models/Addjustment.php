@@ -1,18 +1,18 @@
-<?php namespace Inventory\Warehouse\Models;
+<?php namespace Inventory\Transaction\Models;
 
 use Model;
 
 /**
- * warehouse Model
+ * addjustment Model
  */
-class Warehouse extends Model
+class Addjustment extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'inventory_warehouse_warehouses';
+    public $table = 'inventory_transaction_addjustments';
 
     /**
      * @var array Guarded fields
@@ -22,12 +22,7 @@ class Warehouse extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [
-        'name',
-        'facility',
-        'capacity',
-        'is_active'
-    ];
+    protected $fillable = [];
 
     /**
      * @var array Validation rules for attributes
@@ -66,17 +61,14 @@ class Warehouse extends Model
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [
-        'stuffs' => \Inventory\Warehouse\Models\Stuff::class,
-        'logs'   => \Inventory\Warehouse\Models\Log::class,
+    public $hasMany = [];
+    public $belongsTo = [
+        'stuff'         => \Inventory\Warehouse\Models\Stuff::class,
     ];
-    public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
-    public $attachOne = [
-        'media'  => 'System\Models\File'
-    ];
+    public $attachOne = [];
     public $attachMany = [];
 }

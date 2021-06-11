@@ -1,0 +1,77 @@
+title = "Create Addjustment"
+url = "/create/addjusment/"
+layout = "default"
+is_hidden = 0
+[inventory]
+stuffId = "{{ :stuffId }}"
+[transaction]
+==
+    use Inventory\Warehouse\Models\Stuff;
+    use Inventory\Warehouse\Models\Category;
+    use Inventory\Warehouse\Models\Denom;
+
+    function onStart(){
+        $this['stuff'] = Stuff::find($this->param('stuffId'));
+        $this['categories'] = Category::all();
+        $this['denoms'] = Denom::all();
+        $this['stuffs'] = Stuff::all();
+    }
+==
+{% set items = inventory.allWarehouse() %}
+{% partial 'navigation' %}
+<div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>Inventory Integration System</h1>
+        <div class="section-header-breadcrumb">
+          <div class="breadcrumb-item active"><a href="#">Stuff</a></div>
+          <div class="breadcrumb-item">Edit</div>
+        </div>
+      </div>
+
+      <div class="section-body">
+        <h2 class="section-title">Create Stuff</h2>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                  {{ form_open({ request: 'onCreateAdjustment' }) }}
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>Select Stuff</label>
+                        <select name="stuff_id" id="" class="form-control">
+                            {%for item in stuffs%}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                            {%endfor%}
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Type Adjustment</label>
+                        <select name="type" id="" class="form-control">
+                            <option value="plus">Plus</option>
+                            <option value="minus">Minus</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Outcoming Date</label>
+                        <input type="date" name="entry_date" class="form-control datepicker" required>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Total Outcome Stuff</label>
+                        <input type="number" name="count" class="form-control" required>
+                      </div>
+
+                      <div class="d-flex">
+                          <button type="submit" class="btn btn-info text-right mr-2">Create</button>
+                        </div>
+                      </div>
+                  {{ form_close() }}
+                </div>
+            </div>
+            </div>
+
+      </div>
+    </section>
+  </div>

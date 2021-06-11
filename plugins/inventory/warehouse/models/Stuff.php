@@ -101,8 +101,8 @@ class Stuff extends Model
         $stringify = [
             'prefix'      => $prefix,
             'warehouse_id'=> $this->warehouse ? $this->integerToRoman($this->warehouse->id) : 'XXX',
-            'dd'          => Carbon::parse(now())->format('d'),
-            'mm'          => Carbon::parse(now())->format('m'),
+            'category'          => $this->category->name,
+            'mm'          => Carbon::parse(now())->format('d'),
             'count'       => $this->integerToRoman($this->count() + 1)
         ];
 

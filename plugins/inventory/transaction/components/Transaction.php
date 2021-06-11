@@ -1,6 +1,7 @@
 <?php namespace Inventory\Transaction\Components;
 
-use Inventory\Transaction\Models\{Supply, Outcome};
+use Inventory\Transaction\Models\{Supply, Outcome, Addjustment};
+use Inventory\Warehouse\Models\Stuff;
 use Cms\Classes\ComponentBase;
 use Carbon\Carbon;
 
@@ -56,6 +57,14 @@ class Transaction extends ComponentBase
     {
         $data = post();
         $item = Supply::find((int) array_get($data,'supply_id'));
+
+        $item->stuff->total -= $item->sum;
+        if ($item->stuff->total < 0) {
+            \Flash::error('Stuff less than 0, please check again');
+            return redirect()->refresh();   
+        }
+
+        $item->stuff->save();
         $item->delete();
         \Flash::error('Log already updated');
         return \Redirect::refresh();
@@ -65,6 +74,8 @@ class Transaction extends ComponentBase
     {
         $data = post();
         $item = Outcome::find((int) array_get($data,'outcome_id'));
+        $item->stuff->total += $item->sum;
+        $item->stuff->save();
         $item->delete();
         \Flash::error('Log already updated');
         return \Redirect::refresh();
@@ -94,5 +105,36 @@ class Transaction extends ComponentBase
         }
         \Flash::success('Supply stuff already created');
         return \Redirect::to('outcoming/stuff');
+    }
+
+    public function onCreateAdjustment()
+    {
+        $data = post();
+        $item = new Addjustment;
+        $stuff = Stuff::find((int) array_get($data,'stuff_id'));
+        if (!$stuff) {
+            throw new \ApplicationException("Stuff not found");
+        }
+
+        $item->stuff_id = (int) array_get($data,'stuff_id');
+
+        if (array_get($data,'type') == 'minus') {
+            $item->stuff->total -= (int) array_get($data,'count');
+        }
+        else {
+            $item->stuff->total += (int) array_get($data,'count');
+        }
+
+        $item->count = array_get($data,'count');
+        $item->save();
+        $item->stuff->save();
+        \Flash::success('Data has been created');
+        return \Redirect::to('addjustment/stuff');
+    }
+
+    public function listDataAddjustment()
+    {
+        $items = Addjustment::all();
+        return $items;
     }
 }
